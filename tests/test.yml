@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+    - { role: repo_remi, name: "ppa:brightbox/ruby-ng" }
+    - { role: repo_remi, name: "ppa:brightbox/ruby-ng", state: "absent" }
+

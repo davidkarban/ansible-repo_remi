@@ -1,0 +1,15 @@
+---
+# tasks file for repo_remi
+- fail: msg="This role is for RedHat-like systems only"
+  when: ansible_os_family != "RedHat"
+
+- name: Ensure yum remi repository is available
+  yum: name=http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_lsb.major_release }}.rpm state=present
+
+- name: Upload repository config templates
+  template: src={{ item + '.j2' }} dest={{ '/etc/yum.repos.d/' + item }} mode=0644 owner=root group=root
+  with_items:
+    - remi-php70.repo
+    - remi-safe.repo
+    - remi.repo
+
