@@ -4,7 +4,7 @@
   when: ansible_os_family != "RedHat"
 
 - name: Ensure yum remi repository is available
-  yum: name=http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_lsb.major_release }}.rpm state=present
+  yum: name=http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_lsb.major_release }}.rpm state={{ state }}
 
 - name: Upload repository config templates
   template: src={{ item + '.j2' }} dest={{ '/etc/yum.repos.d/' + item }} mode=0644 owner=root group=root
@@ -12,4 +12,14 @@
     - remi-php70.repo
     - remi-safe.repo
     - remi.repo
+  when: state="present"
+
+- name: Remove repository files
+  file: path="{{ item }}" state=absent
+  with_items:
+    - "/etc/yum.repos.d/remi-php70.repo"
+    - "/etc/yum.repos.d/remi-safe.repo"
+    - "/etc/yum.repos.d/remi.repo"
+    - "/etc/pki/rpm-gpg/RPM-GPG-KEY-remi"
+  when: state="absent"
 
