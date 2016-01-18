@@ -12,14 +12,13 @@
     - remi-php70.repo
     - remi-safe.repo
     - remi.repo
-# BUG: cannot use state = 'present' in when
-# when: state = 'present'
+  when: state == 'present'
 
-#- name: Remove repository files
-#  file: path={{ item }} state=absent
-#  with_items:
-#    - "/etc/yum.repos.d/remi-php70.repo"
-#    - "/etc/yum.repos.d/remi-safe.repo"
-#    - "/etc/yum.repos.d/remi.repo"
-#  when: "{{ state }} != 'absent'"
+- name: Remove repository files
+  file: path={{ item }} state=absent
+  with_items:
+    - "/etc/yum.repos.d/remi-php70.repo"
+    - "/etc/yum.repos.d/remi-safe.repo"
+    - "/etc/yum.repos.d/remi.repo"
+  when: state == 'absent'
 
