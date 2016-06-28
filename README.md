@@ -11,7 +11,8 @@ Works only on RedHat like systems.
 Dependencies
 ------------
 
-Epel repository must be available.
+  - davidkarban.bootstrap
+  - Epel repository must be available.
 
 Role Variables
 --------------
